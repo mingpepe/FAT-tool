@@ -1,14 +1,16 @@
 # fat32-parser
 Command line tool to access FAT32
 
-- Supported command
-  - cd
-  - dir
-  - del
-  - rmdir
-  - dump
-  - pwd
-  - download
-  - load
-- To do
-  - mkdir
+- Todo list
+  - [x] cd
+  - [x] dir
+  - [x] del
+  - [x] rmdir
+  - [x] dump
+  - [x] pwd
+  - [x] download
+  - [x] load
+  - [ ] mkdir
+  - [ ] format
+  - [ ] document
+  - [ ] support FAT12

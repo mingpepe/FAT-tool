@@ -1,5 +1,5 @@
-# fat32-parser
-Command line tool to access FAT32
+# FAT-tool
+Command line tool to access FAT file system
 
 - Todo list
   - [x] cd
@@ -14,3 +14,6 @@ Command line tool to access FAT32
   - [ ] format
   - [ ] document
   - [ ] support FAT12
+  
+- Supported file system
+   - FAT32

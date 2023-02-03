@@ -13,7 +13,7 @@ Command line tool to access FAT file system
   - [ ] mkdir
   - [ ] format
   - [ ] document
-  - [ ] support FAT12
   
 - Supported file system
-   - FAT32
+   - [x] FAT32
+   - [ ] FAT12

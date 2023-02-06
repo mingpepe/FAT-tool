@@ -9,6 +9,7 @@ def main():
         controller.run()
     else:
         print('Usage : main.py FAT32_DIR_PATH')
+        print('E.g. main.py \\\\.\\C:')
     
 if __name__ == '__main__':
     main()

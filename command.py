@@ -194,7 +194,7 @@ class CommandController:
                 else:
                     self._rmdir_cmd(name)
                 self._cd_cmd('..')
-        self._del_dir(dir)
+        self._del_dir(directory)
 
     def _del_dir(self, directory):
         data = read_sector(self.path, directory.sector_index)

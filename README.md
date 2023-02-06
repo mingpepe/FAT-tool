@@ -1,5 +1,5 @@
-# fat32-parser
-Command line tool to access FAT32
+# FAT-tool
+Command line tool to access FAT file system
 
 - Todo list
   - [x] cd
@@ -13,7 +13,10 @@ Command line tool to access FAT32
   - [ ] mkdir
   - [ ] format
   - [x] document
-  - [ ] support FAT12
+  
+- Supported file system
+   - [x] FAT32
+   - [ ] FAT12
 
-  ## Reference
-  https://academy.cba.mit.edu/classes/networking_communications/SD/FAT.pdf
+## Reference
+https://academy.cba.mit.edu/classes/networking_communications/SD/FAT.pdf

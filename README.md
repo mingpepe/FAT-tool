@@ -12,5 +12,8 @@ Command line tool to access FAT32
   - [x] load
   - [ ] mkdir
   - [ ] format
-  - [ ] document
+  - [x] document
   - [ ] support FAT12
+
+  ## Reference
+  https://academy.cba.mit.edu/classes/networking_communications/SD/FAT.pdf

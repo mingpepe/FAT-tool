@@ -91,8 +91,9 @@ class CommandController:
     def _cd_cmd(self, target):
         if target == '.': return
         if target == '..':
-            self.curr_cluster_index = self.cluster_index_stack.pop()
-            self.pwd = self.pwd_stack.pop()
+            if len(self.cluster_index_stack) != 0:
+                self.curr_cluster_index = self.cluster_index_stack.pop()
+                self.pwd = self.pwd_stack.pop()
             return
 
         target_cluster_index = None

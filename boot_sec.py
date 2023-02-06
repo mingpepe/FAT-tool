@@ -1,7 +1,9 @@
 from helper import unpack
 
+
 class BootSecor:
     BOOT_SECTOR_SIZE = 512
+
     def __init__(self, data):
         self.jump = unpack('ccc', data, 0)
         self.oem_name = unpack('8s', data, 3)
@@ -24,7 +26,7 @@ class BootSecor:
         self.num_of_header = unpack('H', data, 26)
         self.hidden_sec = unpack('L', data, 28)
         self.total_sec_32 = unpack('L', data, 32)
-        # The fields in the first 36 bytes are common field for all FAT types 
+        # The fields in the first 36 bytes are common field for all FAT types
         # and the fields from byte offset 36 depends on whether the FAT type is FAT32 or FAT12/FAT16.
         self.FAT_size_32 = unpack('L', data, 36)
         self.ext_flag = unpack('H', data, 40)
@@ -40,14 +42,15 @@ class BootSecor:
         self.vol_lab = unpack('11s', data, 71)
         self.fs_type = unpack('8s', data, 82)
         # 420 bytes reserved
-        self.bs_sig = unpack('H', data, 510) # 0x55aa
+        self.bs_sig = unpack('H', data, 510)  # 0x55aa
 
         # Calculated paramter
         self.FAT_start_sec = self.reserved_sec_count
         self.FAT_sec_count = self.FAT_size_32 * self.num_of_FAT
 
         self.root_dir_start_sec = self.FAT_start_sec + self.FAT_sec_count
-        self.root_dir_sec_count = round((32 * self.root_ent_count + self.bytes_per_sec - 1) / self.bytes_per_sec)
+        self.root_dir_sec_count = round(
+            (32 * self.root_ent_count + self.bytes_per_sec - 1) / self.bytes_per_sec)
 
         self.data_start_sec = self.root_dir_start_sec + self.root_dir_sec_count
         self.data_sec_count = self.total_sec_32 - self.data_start_sec

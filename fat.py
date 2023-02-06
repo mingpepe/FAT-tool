@@ -1,11 +1,13 @@
 from helper import unpack
 
+
 class FAT:
     FREE = 0
     RESERVED = 1
     IN_USE = 2
     BAD_CLUSTER = 3
     END_OF_CHAIN = 4
+
     def __init__(self, raw, length):
         self.count = int(length / 4)
         self.data = self.count * [None]
@@ -25,14 +27,15 @@ class FAT:
 
     def dump(self):
         for i in range(self.count):
-            if self.state[i] != FAT.IN_USE: continue
+            if self.state[i] != FAT.IN_USE:
+                continue
             buffer = ''
             buffer += str(i) + ' -> '
-            next = self.data[i]
+            _next = self.data[i]
             while True:
-                buffer += str(next) + ' -> '
-                if self.state[next] == FAT.IN_USE:
-                    next = self.data[next]
+                buffer += str(_next) + ' -> '
+                if self.state[_next] == FAT.IN_USE:
+                    _next = self.data[_next]
                 else:
                     print(buffer)
                     break

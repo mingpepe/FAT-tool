@@ -1,6 +1,7 @@
 import sys
 
-from cmd import CommandController
+from command import CommandController
+
 
 def main():
     if len(sys.argv) == 2:
@@ -10,6 +11,7 @@ def main():
     else:
         print('Usage : main.py FAT32_DIR_PATH')
         print('E.g. main.py \\\\.\\C:')
-    
+
+
 if __name__ == '__main__':
     main()

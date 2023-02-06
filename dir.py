@@ -1,5 +1,6 @@
 from helper import unpack
 
+
 class Directory:
     ATTR_READ_ONLY = 0x01
     ATTR_HIDDEN = 0x02
@@ -8,6 +9,7 @@ class Directory:
     ATTR_DIRECTORY = 0x10
     ATTR_ARCHIVE = 0x20
     ATTR_LONG_FILE_NAME = 0x0f
+
     def __init__(self, data, sector_index, offset):
         self.sector_index = sector_index
         self.offset = offset
@@ -52,8 +54,9 @@ class Directory:
         if self.not_used:
             return
 
-        print(f'[Directory] name : {self.name_bytes}, cluster = {self.cluster}, size = {self.file_size}, is archive = {self.is_archive}, is directory = {self.is_dir}')
-    
+        print(
+            f'[Directory] name : {self.name_bytes}, cluster = {self.cluster}, size = {self.file_size}, is archive = {self.is_archive}, is directory = {self.is_dir}')
+
     def get_name(self):
         if self.is_archive:
             name = self.name_bytes[0:8].decode('utf-8').strip().lower()

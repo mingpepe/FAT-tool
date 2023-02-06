@@ -25,3 +25,4 @@ Command line tool to access FAT file system
 ## Reference
 * https://academy.cba.mit.edu/classes/networking_communications/SD/FAT.pdf
 * https://simple.wikipedia.org/wiki/File_allocation_table
+* https://msdn.microsoft.com/en-us/windows/hardware/gg463080.aspx

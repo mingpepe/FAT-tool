@@ -21,8 +21,6 @@ class CommandController:
         self.cluster_index_stack = []
         self.pwd = path
         self.pwd_stack = []
-
-    def run(self):
         self.table = {
             'cd': (self._cd_cmd, 'cd'),
             'dir': (self._dir_cmd, 'dir'),
@@ -35,6 +33,11 @@ class CommandController:
             'load': (self._load_FAT_cmd, 'load FAT'),
             'help': (self._help_cmd, ''),
         }
+        self.bs = None
+        self.fs_info = None
+        self.fat = None
+
+    def run(self):
         print('Load boot secotr...', end='')
         data = read_sector(self.path, 0)
         self.bs = BootSecor(data)
@@ -283,8 +286,8 @@ class CommandController:
         self.fat = FAT(data, self.bs.FAT_sec_count * SECTOR_SIZE)
 
     def _help_cmd(self, _):
-        for cmd in self.table:
-            desc = self.table[cmd][CommandController.DESC_INDEX]
+        for key, val in self.table.items():
+            desc = val[CommandController.DESC_INDEX]
             if len(desc) == 0:
                 continue
-            print(f'{cmd} : {desc}')
+            print(f'{key} : {desc}')

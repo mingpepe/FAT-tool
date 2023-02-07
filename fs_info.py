@@ -3,13 +3,13 @@ from helper import unpack
 
 class FSInfo:
     def __init__(self, data):
-        self.lead_sig = unpack('L', data, 0)
+        self.lead_sig = unpack('=L', data, 0)
         # 480 bytes reserved
-        self.struc_sig = unpack('L', data, 484)
-        self.free_count = unpack('L', data, 488)
-        self.next_free = unpack('L', data, 492)
+        self.struc_sig = unpack('=L', data, 484)
+        self.free_count = unpack('=L', data, 488)
+        self.next_free = unpack('=L', data, 492)
         # 12 bytes reserved
-        self.tail_sig = unpack('L', data, 508)
+        self.tail_sig = unpack('=L', data, 508)
 
     def dump(self):
         print('[FS info sector]')

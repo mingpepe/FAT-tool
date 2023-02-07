@@ -13,7 +13,7 @@ class FAT:
         self.data = self.count * [None]
         self.state = self.count * [None]
         for i in range(self.count):
-            self.data[i] = unpack('L', raw, i * 4)
+            self.data[i] = unpack('=L', raw, i * 4)
             if self.data[i] == 0:
                 self.state[i] = FAT.FREE
             elif self.data[i] == 1:

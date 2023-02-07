@@ -164,7 +164,7 @@ class CommandController:
                         name = directory.get_name()
                         if name == '.' or name == '..':
                             continue
-                    ret.append(dir)
+                    ret.append(directory)
 
                 sector_index += 1
             if self.fat.state[cluster_index] == FAT.IN_USE:

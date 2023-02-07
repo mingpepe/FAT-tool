@@ -10,7 +10,7 @@ Command line tool to access FAT file system
   - [x] pwd
   - [x] download
   - [x] load
-  - [ ] mkdir
+  - [x] mkdir
   - [ ] format
   - [x] document
   

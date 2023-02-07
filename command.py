@@ -173,6 +173,30 @@ class CommandController:
                 break
         return ret
 
+    def _get_ununsed_dir_entity(self):
+        cluster_index = self.curr_cluster_index
+        sector_index = self._to_sector_index(cluster_index)
+        while True:
+            ptr = 0
+            data = self._read_cluster(cluster_index)
+            for _ in range(self.bs.sec_per_cluster):
+                offset = 0
+                for _ in range(int(SECTOR_SIZE / DIR_SIZE)):
+                    directory = Directory(
+                        data[ptr: ptr + DIR_SIZE], sector_index, offset)
+                    ptr += DIR_SIZE
+                    offset += DIR_SIZE
+
+                    if directory.is_hidden:
+                        continue
+                    if directory.not_used:
+                        return directory
+                sector_index += 1
+            if self.fat.state[cluster_index] == FAT.IN_USE:
+                cluster_index = self.fat.data[cluster_index]
+            else:
+                return None
+
     def _del_cmd(self, filename):
         directory = self._get_file(filename)
         if directory is None:
@@ -181,7 +205,23 @@ class CommandController:
             self._del_dir(directory)
 
     def _mkdir_cmd(self, dir_name):
-        print('Not implement yet')
+        directory = self._get_ununsed_dir_entity()
+        if directory is None:
+            print('Fail to make new directory')
+            return
+        offset = directory.offset
+        data = read_sector(self.path, directory.sector_index)
+        data = bytearray(data)
+        dir_name_bytes = str.encode(dir_name, encoding='utf-8')
+        # Set directory name
+        for i in range(min(11, len(dir_name_bytes))):
+            data[offset + i] = dir_name_bytes[i]
+        
+        data[offset + 11] = Directory.ATTR_DIRECTORY
+        # Set file size = 0
+        for i in range(4):
+            data[offset + 28 + i] = 0
+        write_sector(self.path, directory.sector_index, data)
 
     def _rmdir_cmd(self, dir_name):
         directory = self._get_directory(dir_name)

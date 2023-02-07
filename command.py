@@ -196,6 +196,12 @@ class CommandController:
                 cluster_index = self.fat.data[cluster_index]
             else:
                 return None
+    def _get_free_cluster(self):
+        cluster_index = self.curr_cluster_index
+        while True:
+            if self.fat.state[cluster_index] == FAT.FREE:
+                return cluster_index
+            cluster_index += 1
 
     def _del_cmd(self, filename):
         directory = self._get_file(filename)
@@ -216,11 +222,22 @@ class CommandController:
         # Set directory name
         for i in range(min(11, len(dir_name_bytes))):
             data[offset + i] = dir_name_bytes[i]
-        
+
         data[offset + 11] = Directory.ATTR_DIRECTORY
         # Set file size = 0
         for i in range(4):
             data[offset + 28 + i] = 0
+
+        # Set cluster
+        free_cluster_index = self._get_free_cluster()
+        data[offset + 20] = (free_cluster_index >> 16) & 0xff
+        data[offset + 21] = (free_cluster_index >> 24) & 0xff
+        data[offset + 26] = free_cluster_index & 0xff
+        data[offset + 27] = (free_cluster_index >> 8) & 0xff
+
+        # Update FAT
+        self.fat.state[free_cluster_index] = FAT.IN_USE
+        self.fat.data[free_cluster_index] = 0x01
         write_sector(self.path, directory.sector_index, data)
 
     def _rmdir_cmd(self, dir_name):
